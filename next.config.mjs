@@ -1,4 +1,4 @@
-import UnoCSS from '@unocss/webpack'
+import UnoCSS from "@unocss/webpack";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,9 +12,7 @@ const nextConfig = {
   },
   reactStrictMode: true,
   webpack: (config) => {
-    config.plugins.push(
-      UnoCSS(),
-    );
+    config.plugins.push(UnoCSS());
     config.watchOptions = {
       aggregateTimeout: 300,
       poll: 1000,
@@ -25,4 +23,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-

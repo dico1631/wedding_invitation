@@ -3,13 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:css": "unocss 'src/**/*.tsx' --out-file=src/styles/uno.css --watch",
-    "dev:next": "next dev",
-    "dev": "run-p dev:*",
-    "css": "unocss 'src/**/*.tsx' --out-file=src/styles/uno.css",
-    "build": "npm run css && next build",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "css": "unocss -c uno.config.ts 'src/**/*.tsx' --out-file src/styles/uno.css --watch --debug"
   },
   "dependencies": {
     "@unocss/core": "^0.61.5",
