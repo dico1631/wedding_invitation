@@ -1,3 +1,6 @@
-/node_modules/
-/dist/
-/.parcel-cache/
+.next/
+node_modules/
+coverage/
+__snapshots__/
+package-lock.json
+dist/
