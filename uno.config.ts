@@ -1,20 +1,24 @@
 // uno.config.ts
-import { defineConfig } from "unocss";
-import presetUno from "@unocss/preset-uno";
-import presetIcons from "@unocss/preset-icons";
-import presetWebFonts from '@unocss/preset-web-fonts'
+import {
+  defineConfig,
+  presetUno,
+  presetIcons,
+  presetWebFonts,
+  presetAttributify,
+} from "unocss";
 
 export default defineConfig({
   presets: [
     presetUno(),
     presetIcons(),
+    presetAttributify(),
     presetWebFonts({
-      provider: 'google',
+      provider: "google",
       fonts: {
-        sans: 'Roboto',
-        mono: ['Fira Code', 'Fira Mono:400,700'],
-        lobster: 'Lobster',
+        sans: "Roboto",
+        mono: ["Fira Code", "Fira Mono:400,700"],
+        lobster: "Lobster",
       },
-    })
+    }),
   ],
 });
