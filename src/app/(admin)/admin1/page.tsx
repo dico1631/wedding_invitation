@@ -6,7 +6,7 @@ export default function AdminOne() {
           <option value="groom">신랑</option>
           <option value="bride">신부</option>
         </select>
-        <input name="name_ko" placeholder="이름 (한국어)"></input>
+        <input type="text" name="name_ko" placeholder="이름 (한국어)"></input>
         <button type="submit">입력</button>
       </form>
     </div>

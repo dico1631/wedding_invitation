@@ -1,4 +1,4 @@
-import { connectDB } from '@/util/database'
+import { connectDB } from '@/lib/database'
 
 export default async function wedding() {
   const client = await connectDB;

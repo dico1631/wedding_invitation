@@ -1,15 +1,18 @@
-import {connectDB} from "@/util/database"
+import {connectDB} from "@/lib/database"
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-const Write = async(request,response) =>{
-	console.log('==Write== request.body')
-	console.log(request.body);
+interface User {
+    type: string;
+    name_ko: string;
+}
+
+const Write = async(request:NextApiRequest, response:NextApiResponse) =>{
+	const {name_ko, type}:User = request.body;
 
 	const db = (await connectDB).db("wedding_invitation");
     const client = await connectDB;
 
-    let result = await db.collection('info').insertOne(
-		{name_ko: request.body.name_ko, type: request.body.type}
-	);
+    let result = await db.collection('info').insertOne({name_ko, type});
     return response.status(200).redirect('/wedding');
 }
 
