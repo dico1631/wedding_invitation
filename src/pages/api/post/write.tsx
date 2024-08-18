@@ -9,11 +9,14 @@ interface User {
 const Write = async(request:NextApiRequest, response:NextApiResponse) =>{
 	const {name_ko, type}:User = request.body;
 
-	const db = (await connectDB).db("wedding_invitation");
+	const db = (await connectDB).db("BloomingDay");
+    let r = await db.collection('T_ADMIN').find().toArray();
+    console.log(r);
+    
     const client = await connectDB;
 
-    let result = await db.collection('info').insertOne({name_ko, type});
-    return response.status(200).redirect('/wedding');
+    /*let result = await db.collection('info').insertOne({name_ko, type});
+    return response.status(200).redirect('/wedding');*/
 }
 
 export default Write;

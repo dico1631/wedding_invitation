@@ -1,6 +1,6 @@
 import { MongoClient, MongoClientOptions } from 'mongodb';
 
-const url: string = 'mongodb+srv://sungwoncho94:Lalaland94!!@zzo.3p4qvfa.mongodb.net/?retryWrites=true&w=majority&appName=zzo';
+const url: string = 'mongodb+srv://seonghyunhong:Fursys123@weddingcluster.smhcv.mongodb.net/?retryWrites=true&w=majority&appName=WeddingCluster';
 const options: MongoClientOptions = {};
 let connectDB: Promise<MongoClient>;
 
