@@ -6,7 +6,7 @@ export default async function Admin(props) {
     const db = (await connectDB).db("BloomingDay");
     let admin = await db.collection('T_ADMIN').findOne({"adminCode" : props.params.adminCode});
     let groomInfo, brideInfo;
-    const maxSize = 5;
+    const maxSize = 3;
     if(admin != null){
       groomInfo = await db.collection('T_PEOPLE').find({"adminNo": Number(admin.adminNo), "type": "groom"}).toArray();
       brideInfo = await db.collection('T_PEOPLE').find({"adminNo": Number(admin.adminNo), "type": "bride"}).toArray();
