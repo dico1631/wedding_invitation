@@ -2,7 +2,7 @@ import {connectDB} from "@/lib/database"
 import { NextPage } from 'next';
 import Error from 'next/error';
 
-export default async function Admin(props) {
+export default async function Admin(props:any) {
     const db = (await connectDB).db("BloomingDay");
     let admin = await db.collection('T_ADMIN').findOne({"adminCode" : props.params.adminCode});
     let groomInfo, brideInfo;

@@ -1,0 +1,92 @@
+@font-face {
+  font-family: 'AritaBuri';
+  font-weight: 300;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Light.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Light.eot?#iefix') format('embedded-opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Light.woff2') format('woff2'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Light.woff') format('woff'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Light.ttf') format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: 'AritaBuri';
+  font-weight: 500;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Medium.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Medium.eot?#iefix') format('embedded-opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Medium.woff2') format('woff2'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Medium.woff') format('woff'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Medium.ttf') format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: 'AritaBuri';
+  font-weight: 600;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-SemiBold.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-SemiBold.eot?#iefix') format('embedded-opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-SemiBold.woff2') format('woff2'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-SemiBold.woff') format('woff'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-SemiBold.ttf') format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: 'AritaBuri';
+  font-weight: 700;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Bold.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Bold.eot?#iefix') format('embedded-opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Bold.woff2') format('woff2'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Bold.woff') format('woff'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Bold.ttf') format("truetype");
+  font-display: swap;
+}
+
+.w100p{width: 100%;}
+.mxw480{max-width: 480px;}
+
+.centerBox{display: flex; align-items: center; justify-content: center;box-sizing: border-box;}
+.centerBox._column {flex-direction: column;}
+.rightAlignBox{display: flex; justify-content: flex-end;}
+.gridBox{display: grid;grid-template-columns: 1fr 1fr;gap: 9px;}
+
+.tALeft{text-align: left;}
+.tACenter{text-align: center;}
+.tARight{text-align: right;}
+
+.font{font-family: 'AritaBuri', sans-serif;font-weight: 500;word-break: keep-all;}
+.fontEn{font-family: 'the-seasons', sans-serif;}
+
+.fontBold{font-weight: 700;}
+.fontLight{font-weight: 300;}
+
+.fontGry{color: #707070;}
+.fontLightGry{color: #7B7B7B;}
+.fontBlack{color: #414141;}
+.fontBlu{color: #91A3FF;}
+.fontPink{color: #FEA692;}
+
+.fontSubTitle{font-size: 16px;line-height: 34px;letter-spacing: 0.13rem;text-align: center;margin-bottom: 30px;}
+.fontContent{font-size: 14px;line-height: 2;letter-spacing: -0.025rem;}
+.fontInfo{font-size: 20px;line-height: 32px;}
+
+.imgTxtBox {display: flex;flex-direction: column;}
+.imgTxtBox .content {display: flex;flex-direction: column;margin-top: 10px;text-align: center;}
+
+.countdown{display: grid;grid-template-columns: 1fr 1fr 1fr;gap: 22px;width: 100%;margin-top: 40px;}
+.countdown dt{font-size: 11px;line-height: 34px;letter-spacing: 0.13rem;text-align: center;}
+.countdown .gridBox{width: 100%;gap: 3px;}
+.numberCard{display: flex;align-items: center;justify-content: center;height: 55px;font-size: 28px;color: #707070;letter-spacing:0.13rem;border-radius: 3px;background-color: #fff;box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.16);}
+
+.swiperContainer{width: 100%;min-height: 450px;box-sizing: border-box;}
+.swiperContainer .swiper-slide img{border-radius: 7px;}
+
+.swiper-button-prev:after, .swiper-rtl .swiper-button-next:after, .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after{font-size: 30px !important;color: rgba(0, 0, 0, 0.16);}
+.swiper-wrapper {align-items: center;}
+.fullscreen-modal {position: fixed;top: 0;left: 0;width: 100vw;height: 100vh;padding-left: 8px;padding-right: 8px;box-sizing: border-box;background-color: rgba(255, 255, 255, 0.9);z-index: 9999;display: flex;justify-content: center;align-items: center;}
+.close-btn {position: absolute;top: 20px;right: 20px;width: 28px;height: 28px;background-color: transparent;background-repeat: no-repeat;background-size: contain;background-image:url('/images/icon/icn_close.svg');border: none;font-size: 0;cursor: pointer;}
+.fullscreen-modal img{border-radius: 7px;}
+
+.mapButton {display: flex;align-items:center;justify-content:center;padding: 4px 0 7px;font-size: 16px;line-height: 26px;color: #707070;border: none;border-radius: 5px;background-color: #fff;box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.16);}
+
