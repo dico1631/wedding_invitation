@@ -139,32 +139,32 @@ function JinwooMinjae() {
 
   // url 공유하기
   useEffect(() => {
-    if (!window.Kakao.isInitialized()) {
-      window.Kakao.init('0c6180529cd31fd05720bddc63f9bc77');
-    }
+    // if (!window.Kakao.isInitialized()) {
+    //   window.Kakao.init('0c6180529cd31fd05720bddc63f9bc77');
+    // }
   }, []);
   const handleKakaoShare = () => {
-    window.Kakao.Link.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: '11월 3일 이진우 ♥ 신민재 결혼합니다. ',
-        description: '여기를 눌러 링크를 확인하세요. ',
-        imageUrl: '/images/main/main.png',
-        link: {
-          mobileWebUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
-          webUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae', 
-        },
-      },
-      buttons: [
-        {
-          title: '자세히 보기',
-          link: {
-            mobileWebUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
-            webUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
-          },
-        },
-      ],
-    });
+    // window.Kakao.Link.sendDefault({
+    //   objectType: 'feed',
+    //   content: {
+    //     title: '11월 3일 이진우 ♥ 신민재 결혼합니다. ',
+    //     description: '여기를 눌러 링크를 확인하세요. ',
+    //     imageUrl: '/images/main/main.png',
+    //     link: {
+    //       mobileWebUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
+    //       webUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae', 
+    //     },
+    //   },
+    //   buttons: [
+    //     {
+    //       title: '자세히 보기',
+    //       link: {
+    //         mobileWebUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
+    //         webUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
+    //       },
+    //     },
+    //   ],
+    // });
   };
   const handleLinkCopy = () => {
     navigator.clipboard.writeText(window.location.href)
