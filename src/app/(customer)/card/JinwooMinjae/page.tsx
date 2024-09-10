@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs } from 'swiper/modules';
 import SwiperCore from 'swiper';
-// import Kakao from "kakao-js-sdk";
 
 import './reset.css';
 import './card.css';
@@ -139,32 +138,34 @@ function JinwooMinjae() {
 
   // url 공유하기
   useEffect(() => {
-    // if (!window.Kakao.isInitialized()) {
-    //   window.Kakao.init('0c6180529cd31fd05720bddc63f9bc77');
-    // }
+    //console.log(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init('0c6180529cd31fd05720bddc63f9bc77');
+    }
   }, []);
   const handleKakaoShare = () => {
-    // window.Kakao.Link.sendDefault({
-    //   objectType: 'feed',
-    //   content: {
-    //     title: '11월 3일 이진우 ♥ 신민재 결혼합니다. ',
-    //     description: '여기를 눌러 링크를 확인하세요. ',
-    //     imageUrl: '/images/main/main.png',
-    //     link: {
-    //       mobileWebUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
-    //       webUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae', 
-    //     },
-    //   },
-    //   buttons: [
-    //     {
-    //       title: '자세히 보기',
-    //       link: {
-    //         mobileWebUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
-    //         webUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
-    //       },
-    //     },
-    //   ],
-    // });
+    const { Kakao } = window;
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '11월 3일 이진우 ♥ 신민재 결혼합니다. ',
+        description: '여기를 눌러 링크를 확인하세요. ',
+        imageUrl: '/images/main/main.png',
+        link: {
+          mobileWebUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
+          webUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae', 
+        },
+      },
+      buttons: [
+        {
+          title: '자세히 보기',
+          link: {
+            mobileWebUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
+            webUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
+          },
+        },
+      ],
+    });
   };
   const handleLinkCopy = () => {
     navigator.clipboard.writeText(window.location.href)
@@ -247,7 +248,6 @@ function JinwooMinjae() {
             width={900}
             height={1569}
             style={{ maxWidth: '100%', height: 'auto' }}
-            unoptimized
             >
           </Image>
         </section>
