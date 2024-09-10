@@ -1,10 +1,9 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Thumbs } from 'swiper/modules';
 import SwiperCore from 'swiper';
-
-//import Kakao from "kakao-js-sdk";
+// import Kakao from "kakao-js-sdk";
 
 import './reset.css';
 import './card.css';
@@ -14,13 +13,60 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import Image from 'next/image';
+import type { Swiper as SwiperType } from 'swiper';
+
+type AccountInfo = {
+  name: string;
+  bank: string;
+  accountNumber: string;
+  position: string;
+};
+
+const groomAccounts: AccountInfo[] = [
+  { name: '이진우', bank: '국민은행', accountNumber: '344902-04-204588', position: '신랑' },
+  { name: '이기웅', bank: '하나은행', accountNumber: '622-910192-37507', position: '신랑 아버지'  },
+  { name: '박지연', bank: '국민은행', accountNumber: '745401-01-126155', position: '신랑 어머니'  }
+];
+const brideAccounts: AccountInfo[] = [
+  { name: '신민재', bank: '우리은행', accountNumber: '1002-860-037514', position: '신부'  },
+  { name: '신범식', bank: '우리은행', accountNumber: '1002-732-309003', position: '신부 아버지'  },
+  { name: '우영숙', bank: '우리은행', accountNumber: '1002-958-873187', position: '신부 어머니'  }
+];
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 function JinwooMinjae() {
 
   // 계좌번호 토글
-  const [groomOpen, setGroomOpen] = useState(false);
-  const [brideOpen, setBrideOpen] = useState(false);
+  const [groomOpen, setGroomOpen] = useState(true);
+  const [brideOpen, setBrideOpen] = useState(true);
 
+  
+  const copyGroomToClipboard = (bank: string, accountNumber: string) => {
+    const textToCopy = `${bank} ${accountNumber}`;
+
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => alert('계좌번호가 복사되었습니다.'))
+        .catch((err) => console.error('복사 실패:', err));
+    } else {
+      const textArea = document.createElement('textarea');
+      textArea.value = textToCopy;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        alert('계좌번호가 복사되었습니다.');
+      } catch (err) {
+        console.error('복사 실패:', err);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
 
   // 카운트다운
   const [day1, setDay1] = useState(0);
@@ -92,33 +138,33 @@ function JinwooMinjae() {
 
 
   // url 공유하기
-  // useEffect(() => {
-  //   // 카카오 SDK 초기화 (appKey는 카카오 디벨로퍼스에서 발급받은 키로 교체)
-  //   Kakao.init("YOUR_KAKAO_APP_KEY");
-  // }, []);
-
+  useEffect(() => {
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init('0c6180529cd31fd05720bddc63f9bc77');
+    }
+  }, []);
   const handleKakaoShare = () => {
-    // Kakao.Link.sendDefault({
-    //   objectType: "feed",
-    //   content: {
-    //     title: "웨딩 초대장",
-    //     description: "진우와 민재의 결혼식에 초대합니다!",
-    //     imageUrl: "https://example.com/wedding.jpg", // 대표 이미지 URL
-    //     link: {
-    //       mobileWebUrl: window.location.href,
-    //       webUrl: window.location.href,
-    //     },
-    //   },
-    //   buttons: [
-    //     {
-    //       title: "자세히 보기",
-    //       link: {
-    //         mobileWebUrl: window.location.href,
-    //         webUrl: window.location.href,
-    //       },
-    //     },
-    //   ],
-    // });
+    window.Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '11월 3일 이진우 ♥ 신민재 결혼합니다. ',
+        description: '여기를 눌러 링크를 확인하세요. ',
+        imageUrl: '/images/main/main.png',
+        link: {
+          mobileWebUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
+          webUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae', 
+        },
+      },
+      buttons: [
+        {
+          title: '자세히 보기',
+          link: {
+            mobileWebUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
+            webUrl: 'https://bloomingday.kro.kr/card/JinwooMinjae',
+          },
+        },
+      ],
+    });
   };
   const handleLinkCopy = () => {
     navigator.clipboard.writeText(window.location.href)
@@ -132,11 +178,11 @@ function JinwooMinjae() {
 
 
   // 슬라이드
-  //const [thumbsSwiper, setThumbsSwiper] = useState(null);
   SwiperCore.use([Navigation]);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [initialSlide, setInitialSlide] = useState(0);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
 
   // 전체 화면 모달 열기
   const openFullscreen = (index: number) => {
@@ -201,6 +247,7 @@ function JinwooMinjae() {
             width={900}
             height={1569}
             style={{ maxWidth: '100%', height: 'auto' }}
+            unoptimized
             >
           </Image>
         </section>
@@ -223,7 +270,7 @@ function JinwooMinjae() {
               >
             </Image>
           </span>
-          <span className="rightAlignBox w100p tARight fontContent font fontGry">
+          <span className="rightAlignBox w100p tARight fontContent fontAB fontGry">
             함께 맞이하는 여섯 번째 가을,<br/>
             저희 두 사람이 새 출발의 첫걸음을 내딛습니다.<br/>
             좋은 꿈, 바른 뜻으로 올바르게 살 수 있도록<br/>
@@ -249,16 +296,16 @@ function JinwooMinjae() {
                 style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px' }}
                 >
               </Image>
-              <fieldset className="font fontBlack content" style={{fontSize: '13px', lineHeight: '28px', letterSpacing: '0.13rem'}}>
-                <h3 className="font" style={{fontSize: '12px'}}>
-                  <span className="font fontBold" style={{fontSize: '15px'}}>이기웅·박지연</span>
+              <fieldset className="fontAB fontBlack content" style={{fontSize: '13px', lineHeight: '28px', letterSpacing: '0.13rem'}}>
+                <h3 className="fontAB" style={{fontSize: '12px'}}>
+                  <span className="fontAB fontBold" style={{fontSize: '15px'}}>이기웅·박지연</span>
                   의 장남
                 </h3>
-                <h2 className="font fontBold" style={{fontSize: '17px'}}>
-                  <span className="font fontBlu" style={{fontSize: '13px'}}>신랑</span>
+                <h2 className="fontAB fontBold" style={{fontSize: '17px'}}>
+                  <span className="fontAB fontBlu" style={{fontSize: '13px'}}>신랑</span>
                    &nbsp;진우
                   </h2>
-                <span className="font fontLight fontGry" style={{marginTop: '5px', fontSize: '13px', lineHeight: '23px', letterSpacing: '0'}}>
+                <span className="fontAB fontLight fontGry" style={{marginTop: '5px', fontSize: '13px', lineHeight: '23px', letterSpacing: '0'}}>
                   1995년, 대전 출생<br/>
                   #자유로운영혼 #행동파
                 </span>
@@ -273,16 +320,16 @@ function JinwooMinjae() {
                 style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px' }}
                 >
               </Image>
-              <fieldset className="font fontBlack content" style={{fontSize: '13px', lineHeight: '28px', letterSpacing: '0.13rem'}}>
-                <h3 className="font" style={{fontSize: '12px'}}>
-                  <span className="font fontBold" style={{fontSize: '15px'}}>신범식·우영숙</span>
+              <fieldset className="fontAB fontBlack content" style={{fontSize: '13px', lineHeight: '28px', letterSpacing: '0.13rem'}}>
+                <h3 className="fontAB" style={{fontSize: '12px'}}>
+                  <span className="fontAB fontBold" style={{fontSize: '15px'}}>신범식·우영숙</span>
                   의 장녀
                 </h3>
-                <h2 className="font fontBold" style={{fontSize: '17px'}}>
-                  <span className="font fontPink" style={{fontSize: '13px'}}>신부</span>
+                <h2 className="fontAB fontBold" style={{fontSize: '17px'}}>
+                  <span className="fontAB fontPink" style={{fontSize: '13px'}}>신부</span>
                    &nbsp;민재
                   </h2>
-                <span className="font fontLight fontGry" style={{marginTop: '5px', fontSize: '13px', lineHeight: '23px', letterSpacing: '0'}}>
+                <span className="fontAB fontLight fontGry" style={{marginTop: '5px', fontSize: '13px', lineHeight: '23px', letterSpacing: '0'}}>
                 1996년, 충주 출생<br/>
                   #청렴결백 #현실주의자
                 </span>
@@ -292,7 +339,7 @@ function JinwooMinjae() {
         </article>
         <article className="centerBox _column w100p" style={{padding: '0px 80px 110px 80px'}}>
           <h2 className="fontEn fontPink fontSubTitle">Wedding Day</h2>
-          <h3 className="w100p font fontBlack fontInfo tACenter" style={{paddingBottom: '25px', marginBottom: '27px', borderBottom: '1px solid rgba(112,112,112,0.7)'}}>
+          <h3 className="w100p fontAB fontBlack fontInfo tACenter" style={{paddingBottom: '25px', marginBottom: '27px', borderBottom: '1px solid rgba(112,112,112,0.5)'}}>
             2024.11.3 일요일 오전 11:00<br/>
             라포르테 웨딩홀 5층
           </h3>
@@ -332,34 +379,39 @@ function JinwooMinjae() {
         </article>
         <article className="centerBox _column w100p" style={{padding: '0px 0px 107px 0px'}}>
           <h2 className="fontEn fontPink fontSubTitle">Gallery</h2>
-          {/* swiper 슬라이드 */}
-          {/* <Swiper
-            loop={true}
-            spaceBetween={10}
-            navigation={true}
-            thumbs={{ swiper: thumbsSwiper }}
-            // modules={[FreeMode, Navigation, Thumbs]}
-            className="mySwiper2"
-          >
-          </Swiper> */}
-          {/* <Swiper
-            //onSwiper={setThumbsSwiper}
-            loop={true}
-            spaceBetween={10}
-            slidesPerView={1}
+          <Swiper
+            onSwiper={setThumbsSwiper}
+            spaceBetween={5}
+            slidesPerView={4.4}
             freeMode={true}
+            loop={true}
+            navigation={true}
             watchSlidesProgress={true}
-            //modules={[FreeMode, Navigation, Thumbs]}
-            className="mySwiper"
-          > */}
+            modules={[Navigation, Thumbs]}
+            className="thumbSwiper"
+          >
+            {images.map((src, index) => (
+              <SwiperSlide key={index}>
+                <Image
+                  src={src}
+                  alt={`Thumbnail ${index + 1}`}
+                  width={96}
+                  height={130}
+                  style={{ objectFit: 'cover', width: '100%', height: '130px', borderRadius: '4px' }}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
           <Swiper
             style={{padding: '0px 50px'}}
             className="swiperContainer"
-            loop={true} // 슬라이드 루프
-            spaceBetween={50} // 슬라이스 사이 간격
-            slidesPerView={1} // 보여질 슬라이스 수
-            navigation={true} // prev, next button\
+            loop={true}
+            spaceBetween={50}
+            slidesPerView={1}
+            navigation={true}
             centeredSlides={true}
+            thumbs={{ swiper: thumbsSwiper }}
+            modules={[Navigation, Thumbs]}
           >
             {images.map((src, index) => (
               <SwiperSlide key={index} onClick={() => openFullscreen(index)}>
@@ -376,7 +428,7 @@ function JinwooMinjae() {
           </Swiper>
           {isFullscreen && (
             <div className="fullscreen-modal">
-              <button className="close-btn" onClick={closeFullscreen}>
+              <button type="button" className="close-btn" onClick={closeFullscreen}>
                 닫기
               </button>
               <Swiper
@@ -402,9 +454,9 @@ function JinwooMinjae() {
             </div>
           )}
         </article>
-        <article>
+        <article className="centerBox _column w100p" style={{padding: '0px 36px 100px 36px'}}>
           <h2 className="fontEn fontPink fontSubTitle">Location</h2>
-          <h3 className="font fontBlack fontInfo tACenter">
+          <h3 className="fontAB fontBlack fontInfo tACenter textDecoNone" style={{marginBottom: '38px'}}>
             대전광역시 서구 문정로 40<br/>
             라포르테 웨딩홀
           </h3>
@@ -413,131 +465,113 @@ function JinwooMinjae() {
             layout="intrinsic"
             width={984} 
             height={873}
-            style={{ maxWidth: '100%', height: 'auto' }}
+            style={{ maxWidth: '100%', height: 'auto', paddingRight: '30px' }}
             >
           </Image>
-          <menu>
+          <menu className="buttonList">
             <li>
-              <button className="mapButton _naver" onClick={() => openMap(naverMapRouteUrl, naverWebPlaceUrl)}>네이버 지도</button>
+              <button type="button" className="mapButton _naver fontPD" onClick={() => openMap(naverMapRouteUrl, naverWebPlaceUrl)}>네이버</button>
             </li>
             <li>
-              <button className="mapButton _tmap" onClick={() => openMap(tmapRouteUrl)}>T MAP</button>
+              <button type="button" className="mapButton _tmap fontPD" onClick={() => openMap(tmapRouteUrl)}>T MAP</button>
             </li>
             <li>
-              <button className="mapButton _kakao" onClick={() => openMap(kakaoMapRouteUrl, kakaoWebPlaceUrl)}>카카오 지도</button>
+              <button type="button" className="mapButton _kakao fontPD" onClick={() => openMap(kakaoMapRouteUrl, kakaoWebPlaceUrl)}>카카오</button>
             </li>
           </menu>
-          <dl>
-            <dt>버스</dt>
-            <dd>
-              <ul>
-                <li>104</li>
-                <li>105</li>
-                <li>706</li>
-                <li>618</li>
+          <dl className="list">
+            <dt className="fontPD fontGry fontBold">🚌 버스</dt>
+            <dd className="fontPD fontGry">
+              <ul className="pillList">
+                <li className="pill">104</li>
+                <li className="pill">105</li>
+                <li className="pill">706</li>
+                <li className="pill _green">618</li>
               </ul>
               탄방동 1번 출구, 국민연금대전지사(녹원아파트)에서 하차
             </dd>
           </dl>
-          <dl>
-            <dt>지하철</dt>
-            <dd>
+          <dl className="list">
+            <dt className="fontPD fontGry fontBold">🚇️ 지하철</dt>
+            <dd className="fontPD fontGry">
               대전 지하철 탄방역 2번 출구 전방 50m 좌측에 위치
             </dd>
           </dl>
-          <dl>
-            <dt>자차</dt>
-            <dd>
+          <dl className="list">
+            <dt className="fontPD fontGry fontBold">🚗 자차</dt>
+            <dd className="fontPD fontGry" style={{borderBottom: 'none'}}>
               ‘라포르테 웨딩홀’ 검색 후 주차장 이용
               본관 지하 1, 2층 및 지상 1층 주차장 이용
             </dd>
           </dl>
-          <section>※ 주차장이 협소하여 지하철을 이용하시면 가장 편리합니다.</section>
+          <section className='w100p tACenter fontGry fontSubInfo' style={{marginTop: '15px'}}>※ 주차장이 협소하여 지하철을 이용하시면 가장 편리합니다.</section>
         </article>
-        <article>
-          <h2 className="font fontPink fontSubTitle">마음 전하실 곳</h2>
-          <dl>
-            <dt>
-              <button onClick={() => setGroomOpen(!groomOpen)}>신랑측 계좌번호</button>
+        <article className="centerBox _column w100p" style={{padding: '0px 64px 118px 64px'}}>
+          <h2 className="fontAB fontPink fontSubTitle">마음 전하실 곳</h2>
+          <dl className="toggleList groom">
+            <dt className="toggleButtonBox">
+              <button type="button" className={`toggleButton fontBlack fontPD ${groomOpen ? "open" : ""}`} onClick={() => setGroomOpen(!groomOpen)}>신랑측 계좌번호</button>
             </dt>
-            <dd>
-              <ul>
-                <li>
-                  <dl>
-                    <dt><span>신랑</span> 이진우</dt>
-                    <dd><span>국민은행</span> 344902-04-204588</dd>
-                  </dl>
-                  <span>
-                    <button>복사</button>
-                    <button>pay</button>
-                  </span>
-                </li>
-                <li>
-                  <dl>
-                    <dt><span>신랑 아버지</span> 이기웅</dt>
-                    <dd><span>하나은행</span> 622-910192-37507</dd>
-                  </dl>
-                  <span>
-                    <button>복사</button>
-                    <button>pay</button>
-                  </span>
-                </li>
-                <li>
-                  <dl>
-                    <dt><span>신랑 어머니</span> 박지연</dt>
-                    <dd><span>국민은행</span> 745401-01-126155</dd>
-                  </dl>
-                  <span>
-                    <button>복사</button>
-                    <button>pay</button>
-                  </span>
-                </li>
+            <dd className={`openListBox ${groomOpen ? "open" : ""}`}>
+              <ul className="openList">
+                {groomAccounts.map((account, index) => (
+                  <li key={index}>
+                    <dl className="info">
+                      <dt className="fontPD fontBlack textDecoNone"><span className="fontPD position textDecoNone">{account.position}</span> {account.name}</dt>
+                      <dd className="fontPD fontBlack textDecoNone"><span className="fontPD bank textDecoNone">{account.bank}</span> {account.accountNumber}</dd>
+                    </dl>
+                    <span className="buttonBox">
+                      <button type="button" className="fontPD fontBlack copy" onClick={() => copyGroomToClipboard(account.bank, account.accountNumber)}>복사</button>
+                    </span>
+                  </li>
+                ))}
               </ul>
             </dd>
           </dl>
-          <dl>
-            <dt>
-              <button onClick={() => setBrideOpen(!brideOpen)}>신부측 계좌번호</button>
+          <dl className="toggleList bride">
+            <dt className="toggleButtonBox">
+              <button type="button" className={`toggleButton fontBlack fontPD ${brideOpen ? "open" : ""}`} onClick={() => setBrideOpen(!brideOpen)}>신부측 계좌번호</button>
             </dt>
-            <dd>
-              <ul>
-                <li>
-                  <dl>
-                    <dt><span>신부</span> 신민재</dt>
-                    <dd><span>우리은행</span> 1002-860-037514</dd>
-                  </dl>
-                  <span>
-                    <button>복사</button>
-                    <button>pay</button>
-                  </span>
-                </li>
-                <li>
-                  <dl>
-                    <dt><span>신부 아버지</span> 이기웅</dt>
-                    <dd><span>우리은행</span> 1002-732-309003</dd>
-                  </dl>
-                  <span>
-                    <button>복사</button>
-                    <button>pay</button>
-                  </span>
-                </li>
-                <li>
-                  <dl>
-                    <dt><span>신부 어머니</span> 박지연</dt>
-                    <dd><span>우리은행</span> 1002-958-873187</dd>
-                  </dl>
-                  <span>
-                    <button>복사</button>
-                    <button>pay</button>
-                  </span>
-                </li>
+            <dd className={`openListBox ${brideOpen ? "open" : ""}`}>
+              <ul className="openList">
+              {brideAccounts.map((account, index) => (
+                  <li key={index}>
+                    <dl className="info">
+                      <dt className="fontPD fontBlack"><span className="fontPD position">{account.position}</span> {account.name}</dt>
+                      <dd className="fontPD fontBlack"><span className="fontPD bank">{account.bank}</span> {account.accountNumber}</dd>
+                    </dl>
+                    <span className="buttonBox">
+                      <button type="button" className="fontPD fontBlack copy" onClick={() => copyGroomToClipboard(account.bank, account.accountNumber)}>복사</button>
+                    </span>
+                  </li>
+                ))}
               </ul>
             </dd>
           </dl>
         </article>
-        <section>
-          <button onClick={handleKakaoShare}>카카오톡<br/>공유</button>
-          <button onClick={handleLinkCopy}>링크<br/>복사하기</button>
+        <section className="footer">
+          <button type="button" onClick={handleKakaoShare} className="button">
+            <Image src="/images/icon/icn_kakao.svg"
+              alt="map"
+              layout="intrinsic"
+              width={20} 
+              height={19}
+              style={{ maxWidth: '100%', height: 'auto'}}
+              >
+            </Image>
+            <span className="fontPD fontLightGry">카카오톡<br/>공유</span>
+          </button>
+          <button type="button" onClick={handleLinkCopy} className="button">
+            <Image src="/images/icon/icn_link.svg"
+              alt="map"
+              layout="intrinsic"
+              width={19} 
+              height={19}
+              style={{ maxWidth: '100%', height: 'auto'}}
+              >
+            </Image>
+            <span className="fontPD fontLightGry">링크<br/>복사하기</span>
+          </button>
         </section>
       </section>
     </div>

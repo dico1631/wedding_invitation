@@ -42,6 +42,13 @@
       url('https://cdn.jsdelivr.net/gh/webfontworld/amore/AritaBuri-Bold.ttf') format("truetype");
   font-display: swap;
 }
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
 
 .w100p{width: 100%;}
 .mxw480{max-width: 480px;}
@@ -55,8 +62,11 @@
 .tACenter{text-align: center;}
 .tARight{text-align: right;}
 
-.font{font-family: 'AritaBuri', sans-serif;font-weight: 500;word-break: keep-all;}
+.textDecoNone{text-decoration: none;}
+
+.fontAB{font-family: 'AritaBuri', sans-serif;font-weight: 500;word-break: keep-all;}
 .fontEn{font-family: 'the-seasons', sans-serif;}
+.fontPD{font-family: 'Pretendard', sans-serif;font-weight: 400;word-break: keep-all;}
 
 .fontBold{font-weight: 700;}
 .fontLight{font-weight: 300;}
@@ -70,6 +80,7 @@
 .fontSubTitle{font-size: 16px;line-height: 34px;letter-spacing: 0.13rem;text-align: center;margin-bottom: 30px;}
 .fontContent{font-size: 14px;line-height: 2;letter-spacing: -0.025rem;}
 .fontInfo{font-size: 20px;line-height: 32px;}
+.fontSubInfo{font-size: 13px;line-height: 23px;}
 
 .imgTxtBox {display: flex;flex-direction: column;}
 .imgTxtBox .content {display: flex;flex-direction: column;margin-top: 10px;text-align: center;}
@@ -81,12 +92,79 @@
 
 .swiperContainer{width: 100%;min-height: 450px;box-sizing: border-box;}
 .swiperContainer .swiper-slide img{border-radius: 7px;}
+.thumbSwiper{width: 100%;margin-bottom: 28px;}
+/* .thumbSwiper::after{content: '';position: absolute;top: 0;right: 0;width: 160px;height: 100%;background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.87));z-index: 5;} */
 
 .swiper-button-prev:after, .swiper-rtl .swiper-button-next:after, .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after{font-size: 30px !important;color: rgba(0, 0, 0, 0.16);}
+.thumbSwiper .swiper-button-prev, .thumbSwiper .swiper-button-prev:after, .thumbSwiper .swiper-rtl .swiper-button-next:after{display: none;}
+.thumbSwiper .swiper-button-next:after, .thumbSwiper .swiper-rtl .swiper-button-prev:after{width: 10px;height: 10px;font-size: 0px !important;background-image: url('/images/icon/icn_circle_arrow.svg');background-position: center;background-repeat: no-repeat;background-size: contain;}
+
 .swiper-wrapper {align-items: center;}
 .fullscreen-modal {position: fixed;top: 0;left: 0;width: 100vw;height: 100vh;padding-left: 8px;padding-right: 8px;box-sizing: border-box;background-color: rgba(255, 255, 255, 0.9);z-index: 9999;display: flex;justify-content: center;align-items: center;}
 .close-btn {position: absolute;top: 20px;right: 20px;width: 28px;height: 28px;background-color: transparent;background-repeat: no-repeat;background-size: contain;background-image:url('/images/icon/icn_close.svg');border: none;font-size: 0;cursor: pointer;}
 .fullscreen-modal img{border-radius: 7px;}
 
-.mapButton {display: flex;align-items:center;justify-content:center;padding: 4px 0 7px;font-size: 16px;line-height: 26px;color: #707070;border: none;border-radius: 5px;background-color: #fff;box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.16);}
+.buttonList{display: grid;grid-template-columns: 1fr 1fr 1fr;gap: 12px;width: 100%;margin: 21px 20px 37px;}
+.buttonList li{display: inline-block;width: 100%;}
+.mapButton {position: relative;display: flex;width: 100%;min-width: 90px;align-items:center;justify-content:center;padding: 4px 8px 7px 34px;font-size: 16px;line-height: 26px;color: #707070;border: none;border-radius: 5px;background-color: #fff;box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.16);cursor: pointer;}
+.mapButton::before{content: '';position: absolute;left: 8px;width: 24px;height: 24px;background-repeat: no-repeat;background-position: center;background-size: contain;}
+.mapButton._naver::before{background-image: url('/images/icon/icn_navermap.png');}
+.mapButton._tmap::before{background-image: url('/images/icon/icn_tmap.png');}
+.mapButton._kakao::before{background-image: url('/images/icon/icn_kakaomap.png');}
 
+.list {display: flex;flex-direction: column;width: 100%;}
+.list dt{display: block;width: 100%;margin-bottom: 3px;font-size: 20px;line-height: 32px;}
+.list dd{display: block;width: 100%;padding-bottom: 15px;margin-bottom: 15px;font-size: 16px;line-height: 26px;border-bottom: 1px solid rgba(112,112,112,0.5);}
+
+.pillList{display: flex;width: 100%;margin: 4px 0 8px;}
+.pill{display: inline-block;width: auto;margin-right: 6px;padding: 0px 7px;font-size: 16px;line-height: 23px;font-weight: 500;color: #fff;border-radius: 12px;background-color: #5CADFE;}
+.pill._green{background-color: #6EDB75;}
+
+.toggleList{display: flex;flex-direction: column;width: 100%;margin-bottom: 30px;}
+.toggleButtonBox{display: flex;width: 100%;}
+.toggleButton{position: relative;display: flex;align-items:center;justify-content:flex-start;width: 100%;padding: 8px 37px 10px 13px;font-size: 16px;line-height: 23px;border-radius: 4px;background-color: transparent;cursor: pointer;}
+.toggleList.groom .toggleButton{border: 1px solid #91A3FF;}
+.toggleList.bride .toggleButton{border: 1px solid #FEA692;}
+.toggleButton::after{content: '';position: absolute;right: 21px;width: 11px;height: 16px;background-image: url('/images/icon/icn_arrow.svg');background-repeat: no-repeat;background-size: contain;transform: rotate(90deg);}
+.toggleButton.open::after{transform: rotate(270deg);}
+
+.openListBox{display: flex;width: 100%;max-height: 0;border-top-left-radius: 2px;border-top-right-radius: 2px;border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;border-right:1px solid #DBDBDB;border-bottom:1px solid #DBDBDB;border-left:1px solid #DBDBDB;ox-sizing: border-box;overflow: hidden;transition: max-height 0.5s ease;}
+.openListBox.open {max-height: 300px;}
+.openList{display: flex;flex-direction: column;width: 100%;padding: 0 10px 7px;box-sizing: border-box;}
+.openList li{display: flex;width: 100%;padding: 12px 7px 13px 10px;border-bottom: 1px solid rgba(112,112,112,0.5);box-sizing: border-box;}
+.openList li:last-child{border-bottom: none;}
+.openList li .info{display: flex;flex-direction: column;width: calc(100% - 57px);}
+.openList li .info dt{width: 100%;margin-bottom: 2px;font-weight: 500;}
+.openList .info .position{font-size: 11px;line-height: 23px;}
+.openList .info .bank{font-size: 13px;line-height: 23px;}
+.openList li .buttonBox{display: flex;flex-direction: column;width: 47px;padding-left: 10px;}
+.openList li .buttonBox button:first-child{margin-bottom: 7px;}
+.buttonBox .copy{padding: 0 10px;font-size: 12px;line-height: 19px;border-radius: 10px;border: none;cursor: pointer;}
+.toggleList.groom .buttonBox .copy{background-color: #D9E0FF;}
+.toggleList.bride .buttonBox .copy{background-color: #FFDAD1;}
+.buttonBox .kakaopay{padding: 0;font-size: 0;border-radius: 10px;border: none;background-color: transparent;cursor: pointer;}
+
+.footer{display: flex;align-items: center;justify-content: center;width: 100%;padding: 25px 0;background-color: #E3E3E3;}
+.footer .button{display: flex;flex-direction: column;align-items: center;padding: 10px;font-size:13px;line-height: 15px;border: none;background-color: transparent;cursor: pointer;}
+.footer .button:first-child{margin-right: 24px;}
+.footer .button img{margin-bottom: 5px;}
+
+/* iOS Safari에서 자동으로 링크 처리되는 것을 막기 위한 설정 */
+a[href^="tel"],
+a[href^="mailto"],
+a[href^="sms"] {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 전화번호와 주소 자동 링크화를 막기 위한 전체 설정 */
+address, a, span {
+  text-decoration: none;
+  color: inherit;
+  -webkit-touch-callout: none;
+}
+
+/* iOS에서 전화번호, 주소의 자동 링크화 방지 */
+meta[name="format-detection"] {
+  content: "telephone=no, address=no, email=no";
+}
