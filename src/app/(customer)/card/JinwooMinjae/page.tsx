@@ -138,14 +138,14 @@ function JinwooMinjae() {
 
   // url 공유하기
   useEffect(() => {
-    //console.log(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+    console.log(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
     if (window.Kakao && !window.Kakao.isInitialized()) {
-      window.Kakao.init('0c6180529cd31fd05720bddc63f9bc77');
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
     }
   }, []);
   const handleKakaoShare = () => {
-    const { Kakao } = window;
-    Kakao.Share.sendDefault({
+    const kakao = window.Kakao;
+    kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
         title: '11월 3일 이진우 ♥ 신민재 결혼합니다. ',
@@ -248,6 +248,7 @@ function JinwooMinjae() {
             width={900}
             height={1569}
             style={{ maxWidth: '100%', height: 'auto' }}
+            unoptimized
             >
           </Image>
         </section>
